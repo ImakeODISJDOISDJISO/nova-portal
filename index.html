@@ -3,119 +3,153 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Portal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nova Portal 2.0</title>
 
 <style>
-* {
-  box-sizing: border-box;
+:root {
+  --bg: #0b1020;
+  --panel: #151e33;
+  --card: #1c2942;
+  --purple: #8b5cf6;
+  --text: #f8fafc;
+  --muted: #aab5ca;
 }
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
+  background: var(--bg);
+  color: var(--text);
   font-family: Arial, sans-serif;
-  background: #0b1020;
-  color: white;
 }
 
 header {
-  padding: 22px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #151d32;
+  padding: 17px 6%;
+  background: #111a2c;
   border-bottom: 1px solid #303c55;
 }
 
 .logo {
+  color: #c4b5fd;
+  font-weight: 900;
   font-size: 23px;
-  font-weight: bold;
-  color: #a78bfa;
 }
 
-header a {
-  color: white;
-  text-decoration: none;
+nav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
 }
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+nav a:hover { color: white; }
 
 main {
-  max-width: 950px;
+  max-width: 1050px;
+  padding: 25px 20px;
   margin: auto;
-  padding: 35px 20px;
 }
 
 .hero {
   text-align: center;
-  padding: 35px 10px;
+  padding: 55px 10px 35px;
+  animation: appear .8s ease;
 }
 
 .hero h1 {
-  font-size: 42px;
-  margin-bottom: 10px;
+  font-size: clamp(34px, 7vw, 58px);
+  margin: 0 0 12px;
 }
 
-.hero p {
-  color: #aab5ca;
+.gradient {
+  background: linear-gradient(90deg,#a78bfa,#60a5fa,#c084fc);
+  background-clip: text;
+  color: transparent;
 }
+
+.hero p { color: var(--muted); }
 
 .search {
+  max-width: 680px;
   display: flex;
-  max-width: 650px;
-  margin: 30px auto;
   gap: 10px;
+  margin: 30px auto;
 }
 
-input {
-  min-width: 0;
-  flex: 1;
-  padding: 15px;
-  border: 1px solid #46516a;
-  border-radius: 10px;
-  background: #18233b;
+input, textarea, select {
+  background: #101a30;
   color: white;
-  font-size: 16px;
+  border: 1px solid #394966;
+  border-radius: 10px;
+  padding: 13px;
+  font: inherit;
 }
+
+.search input { flex: 1; min-width: 0; }
 
 button {
-  background: #7c3aed;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 14px 20px;
   cursor: pointer;
-  font-size: 15px;
+  border: 0;
+  padding: 12px 17px;
+  border-radius: 10px;
+  color: white;
+  background: var(--purple);
+  font-weight: bold;
+  transition: .2s;
 }
 
 button:hover {
-  background: #6d28d9;
+  transform: translateY(-2px);
+  background: #7040d9;
 }
 
-h2 {
-  margin-top: 35px;
+.section-title {
+  margin: 38px 0 16px;
+  font-size: 24px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3,1fr);
   gap: 15px;
 }
 
 .card {
-  background: #18233b;
-  border: 1px solid #303c55;
-  border-radius: 14px;
-  padding: 20px;
+  background: var(--card);
+  border: 1px solid #303e59;
+  border-radius: 15px;
+  padding: 18px;
+  transition: .25s;
+  animation: appear .5s ease both;
 }
 
-.card h3 {
-  margin-top: 0;
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #8b5cf6;
 }
+
+.card h3 { margin-top: 0; }
 
 .card a {
   display: block;
+  padding: 9px 0;
   color: #c4b5fd;
   text-decoration: none;
-  padding: 8px 0;
 }
 
 .card a:hover {
@@ -123,35 +157,63 @@ h2 {
   text-decoration: underline;
 }
 
-.calculator {
+.game-card {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.calculator input {
-  flex-basis: 100%;
+.game-card button { margin-top: auto; }
+
+.game-icon { font-size: 30px; }
+
+.muted { color: var(--muted); font-size: 13px; }
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 15px;
 }
 
-.calculator button {
-  flex: 1;
-  min-width: 55px;
+.tool {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid #303e59;
+}
+
+.tool input, .tool textarea, .tool select {
+  width: 100%;
+  margin: 6px 0;
+}
+
+.tool textarea { min-height: 110px; resize: vertical; }
+
+.result {
+  color: #c4b5fd;
+  overflow-wrap: anywhere;
 }
 
 footer {
   text-align: center;
-  color: #8793aa;
-  padding: 30px;
+  color: var(--muted);
+  padding: 40px 15px;
 }
 
-@media(max-width: 550px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+@keyframes appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .hero h1 {
-    font-size: 32px;
-  }
+@media(max-width:700px) {
+  .grid { grid-template-columns: repeat(2,1fr); }
+  .tools-grid { grid-template-columns: 1fr; }
+}
+
+@media(max-width:460px) {
+  .grid { grid-template-columns: 1fr; }
+  header { align-items: flex-start; gap: 12px; flex-direction: column; }
+  .search { flex-direction: column; }
 }
 </style>
 </head>
@@ -160,66 +222,210 @@ footer {
 
 <header>
   <div class="logo">✦ NOVA PORTAL</div>
-  <a href="#tools">Tools</a>
+  <nav>
+    <a href="#games">Games</a>
+    <a href="#websites">Websites</a>
+    <a href="#tools">Tools</a>
+    <a href="#coding">Coding</a>
+  </nav>
 </header>
 
 <main>
 
 <section class="hero">
-  <h1>Welcome to Nova Portal</h1>
-  <p>Your personal dashboard for the web.</p>
+  <h1>Welcome to <span class="gradient">Nova.</span></h1>
+  <p>Your personal place for games, websites and useful tools.</p>
 
   <form class="search"
     action="https://www.google.com/search"
     method="GET"
     target="_blank">
-
-    <input
-      type="search"
-      name="q"
-      placeholder="Search the web..."
+    <input name="q" type="search"
+      placeholder="Search anything on the web..."
       required>
-
-    <button type="submit">Search</button>
+    <button type="submit">Search ↗</button>
   </form>
 </section>
 
-<h2>Explore</h2>
+<h2 class="section-title" id="games">🎮 Games Library</h2>
+<p class="muted">Game links open their original websites. Availability depends on the network you're using.</p>
 
 <div class="grid">
 
-  <section class="card">
-    <h3>🎮 Games</h3>
-    <a href="https://scratch.mit.edu/" target="_blank">Scratch</a>
-    <a href="https://www.chess.com/" target="_blank">Chess</a>
-    <a href="https://www.coolmathgames.com/" target="_blank">Coolmath Games</a>
-  </section>
+  <div class="card game-card">
+    <div class="game-icon">♟️</div>
+    <h3>Chess.com</h3>
+    <p class="muted">Play chess online.</p>
+    <button onclick="openSite('https://www.chess.com/')">Play ↗</button>
+  </div>
 
+  <div class="card game-card">
+    <div class="game-icon">🧱</div>
+    <h3>Scratch</h3>
+    <p class="muted">Make and play games.</p>
+    <button onclick="openSite('https://scratch.mit.edu/')">Play ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🧠</div>
+    <h3>Coolmath Games</h3>
+    <p class="muted">Puzzles and brain games.</p>
+    <button onclick="openSite('https://www.coolmathgames.com/')">Play ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🧩</div>
+    <h3>Jigsaw Explorer</h3>
+    <p class="muted">Online jigsaw puzzles.</p>
+    <button onclick="openSite('https://www.jigsawexplorer.com/')">Play ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🃏</div>
+    <h3>Solitaire</h3>
+    <p class="muted">Classic card games.</p>
+    <button onclick="openSite('https://www.solitr.com/')">Play ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🔢</div>
+    <h3>2048</h3>
+    <p class="muted">Number puzzle game.</p>
+    <button onclick="openSite('https://play2048.co/')">Play ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">📝</div>
+    <h3>Wordle</h3>
+    <p class="muted">Guess the daily word.</p>
+    <button onclick="openSite('https://www.nytimes.com/games/wordle/index.html')">Play ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🎨</div>
+    <h3>AutoDraw</h3>
+    <p class="muted">Draw with smart suggestions.</p>
+    <button onclick="openSite('https://www.autodraw.com/')">Play ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🌍</div>
+    <h3>GeoGuessr</h3>
+    <p class="muted">Explore places around the world.</p>
+    <button onclick="openSite('https://www.geoguessr.com/')">Play ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🎵</div>
+    <h3>Chrome Music Lab</h3>
+    <p class="muted">Experiment with music.</p>
+    <button onclick="openSite('https://musiclab.chromeexperiments.com/')">Explore ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🧮</div>
+    <h3>Math Playground</h3>
+    <p class="muted">Math activities and puzzles.</p>
+    <button onclick="openSite('https://www.mathplayground.com/')">Play ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🧪</div>
+    <h3>PhET Simulations</h3>
+    <p class="muted">Interactive science activities.</p>
+    <button onclick="openSite('https://phet.colorado.edu/')">Explore ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🧊</div>
+    <h3>Rubik's Cube</h3>
+    <p class="muted">Practice solving a cube.</p>
+    <button onclick="openSite('https://rubiks-cube-solver.com/')">Play ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🌱</div>
+    <h3>Neal.fun</h3>
+    <p class="muted">Creative interactive projects.</p>
+    <button onclick="openSite('https://neal.fun/')">Explore ↗</button>
+  </div>
+
+  <div class="card game-card">
+    <div class="game-icon">🎯</div>
+    <h3>Miniclip</h3>
+    <p class="muted">Online game collection.</p>
+    <button onclick="openSite('https://www.miniclip.com/')">Explore ↗</button>
+  </div>
+
+</div>
+
+<h2 class="section-title" id="websites">🌐 Website Shortcuts</h2>
+
+<div class="grid">
   <section class="card">
-    <h3>🌐 Websites</h3>
-    <a href="https://www.wikipedia.org/" target="_blank">Wikipedia</a>
+    <h3>🌎 Popular</h3>
     <a href="https://www.google.com/" target="_blank">Google</a>
+    <a href="https://www.wikipedia.org/" target="_blank">Wikipedia</a>
     <a href="https://www.youtube.com/" target="_blank">YouTube</a>
+    <a href="https://www.tiktok.com/" target="_blank">TikTok</a>
   </section>
 
-  <section class="card">
+  <section class="card" id="coding">
     <h3>💻 Coding</h3>
     <a href="https://github.com/" target="_blank">GitHub</a>
-    <a href="https://developer.mozilla.org/" target="_blank">MDN Web Docs</a>
     <a href="https://www.w3schools.com/" target="_blank">W3Schools</a>
+    <a href="https://developer.mozilla.org/" target="_blank">MDN</a>
+    <a href="https://codepen.io/" target="_blank">CodePen</a>
   </section>
 
-  <section class="card" id="tools">
-    <h3>🧮 Calculator</h3>
+  <section class="card">
+    <h3>📚 Learning</h3>
+    <a href="https://www.khanacademy.org/" target="_blank">Khan Academy</a>
+    <a href="https://www.duolingo.com/" target="_blank">Duolingo</a>
+    <a href="https://www.britannica.com/" target="_blank">Britannica</a>
+    <a href="https://www.nasa.gov/" target="_blank">NASA</a>
+  </section>
+</div>
 
-    <div class="calculator">
-      <input id="calcDisplay" placeholder="Enter calculation">
+<h2 class="section-title" id="tools">🧮 Built-in Tools</h2>
 
-      <button onclick="calculate()">Calculate</button>
-      <button onclick="clearCalc()">Clear</button>
-    </div>
+<div class="tools-grid">
 
-    <p id="calcResult">Your answer appears here.</p>
+  <section class="tool">
+    <h3>Calculator</h3>
+    <input id="num1" type="number" placeholder="First number">
+    <select id="operation">
+      <option value="+">Addition (+)</option>
+      <option value="-">Subtraction (-)</option>
+      <option value="*">Multiplication (×)</option>
+      <option value="/">Division (÷)</option>
+    </select>
+    <input id="num2" type="number" placeholder="Second number">
+    <button onclick="calculate()">Calculate</button>
+    <p class="result" id="answer">Answer appears here.</p>
+  </section>
+
+  <section class="tool">
+    <h3>⏱️ Countdown Timer</h3>
+    <input id="seconds" type="number" min="1" placeholder="Seconds">
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+    <p class="result" id="timerDisplay">Ready!</p>
+  </section>
+
+  <section class="tool">
+    <h3>📝 Notes</h3>
+    <textarea id="notes" placeholder="Write your notes here..."></textarea>
+    <button onclick="saveNotes()">Save notes</button>
+    <button onclick="clearNotes()">Clear</button>
+    <p class="result" id="noteStatus">Notes stay in this browser.</p>
+  </section>
+
+  <section class="tool">
+    <h3>🔤 Word Counter</h3>
+    <textarea id="wordInput" placeholder="Write something..."></textarea>
+    <button onclick="countWords()">Count words</button>
+    <p class="result" id="wordResult">0 words · 0 characters</p>
   </section>
 
 </div>
@@ -227,40 +433,117 @@ footer {
 </main>
 
 <footer>
-  Nova Portal · Made with HTML, CSS and JavaScript
+  ✦ NOVA PORTAL 2.0<br>
+  Built with HTML, CSS and JavaScript.
 </footer>
 
 <script>
+function openSite(url) {
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
 function calculate() {
-  const display = document.getElementById("calcDisplay");
-  const result = document.getElementById("calcResult");
+  const a = Number(document.getElementById("num1").value);
+  const b = Number(document.getElementById("num2").value);
+  const op = document.getElementById("operation").value;
 
-  const expression = display.value.trim();
-
-  // Only allow basic arithmetic characters.
-  if (!/^[0-9+\-*/().\s]+$/.test(expression)) {
-    result.textContent = "Please enter a valid calculation.";
+  if (
+    document.getElementById("num1").value === "" ||
+    document.getElementById("num2").value === ""
+  ) {
+    document.getElementById("answer").textContent =
+      "Enter both numbers first.";
     return;
   }
 
-  try {
-    const answer = Function(
-      '"use strict"; return (' + expression + ')'
-    )();
+  let result;
 
-    result.textContent =
-      Number.isFinite(answer)
-        ? "Answer: " + answer
-        : "Invalid calculation.";
-  } catch {
-    result.textContent = "Invalid calculation.";
+  if (op === "+") result = a + b;
+  if (op === "-") result = a - b;
+  if (op === "*") result = a * b;
+  if (op === "/") result = b === 0 ? "Cannot divide by zero" : a / b;
+
+  document.getElementById("answer").textContent =
+    "Answer: " + result;
+}
+
+let timerInterval = null;
+
+function startTimer() {
+  stopTimer();
+
+  let seconds = Number(document.getElementById("seconds").value);
+
+  if (!Number.isInteger(seconds) || seconds < 1) {
+    document.getElementById("timerDisplay").textContent =
+      "Enter a positive number of seconds.";
+    return;
+  }
+
+  document.getElementById("timerDisplay").textContent =
+    seconds + " seconds";
+
+  timerInterval = setInterval(() => {
+    seconds--;
+
+    if (seconds <= 0) {
+      stopTimer();
+      document.getElementById("timerDisplay").textContent =
+        "Time is up!";
+      return;
+    }
+
+    document.getElementById("timerDisplay").textContent =
+      seconds + " seconds";
+  }, 1000);
+}
+
+function stopTimer() {
+  if (timerInterval !== null) {
+    clearInterval(timerInterval);
+    timerInterval = null;
   }
 }
 
-function clearCalc() {
-  document.getElementById("calcDisplay").value = "";
-  document.getElementById("calcResult").textContent =
-    "Your answer appears here.";
+function saveNotes() {
+  try {
+    localStorage.setItem(
+      "novaNotes",
+      document.getElementById("notes").value
+    );
+
+    document.getElementById("noteStatus").textContent =
+      "Notes saved on this browser!";
+  } catch {
+    document.getElementById("noteStatus").textContent =
+      "Saving is unavailable in this browser.";
+  }
+}
+
+function clearNotes() {
+  document.getElementById("notes").value = "";
+
+  try {
+    localStorage.removeItem("novaNotes");
+  } catch {}
+
+  document.getElementById("noteStatus").textContent =
+    "Notes cleared.";
+}
+
+try {
+  document.getElementById("notes").value =
+    localStorage.getItem("novaNotes") || "";
+} catch {}
+
+function countWords() {
+  const value = document.getElementById("wordInput").value.trim();
+  const words = value ? value.split(/\s+/).length : 0;
+
+  document.getElementById("wordResult").textContent =
+    words + " words · " +
+    document.getElementById("wordInput").value.length +
+    " characters";
 }
 </script>
 
