@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Portal</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1020;
+  color: white;
+}
+
+header {
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #151d32;
+  border-bottom: 1px solid #303c55;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+  color: #a78bfa;
+}
+
+header a {
+  color: white;
+  text-decoration: none;
+}
+
+main {
+  max-width: 950px;
+  margin: auto;
+  padding: 35px 20px;
+}
+
+.hero {
+  text-align: center;
+  padding: 35px 10px;
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  color: #aab5ca;
+}
+
+.search {
+  display: flex;
+  max-width: 650px;
+  margin: 30px auto;
+  gap: 10px;
+}
+
+input {
+  min-width: 0;
+  flex: 1;
+  padding: 15px;
+  border: 1px solid #46516a;
+  border-radius: 10px;
+  background: #18233b;
+  color: white;
+  font-size: 16px;
+}
+
+button {
+  background: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 20px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover {
+  background: #6d28d9;
+}
+
+h2 {
+  margin-top: 35px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.card {
+  background: #18233b;
+  border: 1px solid #303c55;
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card a {
+  display: block;
+  color: #c4b5fd;
+  text-decoration: none;
+  padding: 8px 0;
+}
+
+.card a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.calculator {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.calculator input {
+  flex-basis: 100%;
+}
+
+.calculator button {
+  flex: 1;
+  min-width: 55px;
+}
+
+footer {
+  text-align: center;
+  color: #8793aa;
+  padding: 30px;
+}
+
+@media(max-width: 550px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">✦ NOVA PORTAL</div>
+  <a href="#tools">Tools</a>
+</header>
+
+<main>
+
+<section class="hero">
+  <h1>Welcome to Nova Portal</h1>
+  <p>Your personal dashboard for the web.</p>
+
+  <form class="search"
+    action="https://www.google.com/search"
+    method="GET"
+    target="_blank">
+
+    <input
+      type="search"
+      name="q"
+      placeholder="Search the web..."
+      required>
+
+    <button type="submit">Search</button>
+  </form>
+</section>
+
+<h2>Explore</h2>
+
+<div class="grid">
+
+  <section class="card">
+    <h3>🎮 Games</h3>
+    <a href="https://scratch.mit.edu/" target="_blank">Scratch</a>
+    <a href="https://www.chess.com/" target="_blank">Chess</a>
+    <a href="https://www.coolmathgames.com/" target="_blank">Coolmath Games</a>
+  </section>
+
+  <section class="card">
+    <h3>🌐 Websites</h3>
+    <a href="https://www.wikipedia.org/" target="_blank">Wikipedia</a>
+    <a href="https://www.google.com/" target="_blank">Google</a>
+    <a href="https://www.youtube.com/" target="_blank">YouTube</a>
+  </section>
+
+  <section class="card">
+    <h3>💻 Coding</h3>
+    <a href="https://github.com/" target="_blank">GitHub</a>
+    <a href="https://developer.mozilla.org/" target="_blank">MDN Web Docs</a>
+    <a href="https://www.w3schools.com/" target="_blank">W3Schools</a>
+  </section>
+
+  <section class="card" id="tools">
+    <h3>🧮 Calculator</h3>
+
+    <div class="calculator">
+      <input id="calcDisplay" placeholder="Enter calculation">
+
+      <button onclick="calculate()">Calculate</button>
+      <button onclick="clearCalc()">Clear</button>
+    </div>
+
+    <p id="calcResult">Your answer appears here.</p>
+  </section>
+
+</div>
+
+</main>
+
+<footer>
+  Nova Portal · Made with HTML, CSS and JavaScript
+</footer>
+
+<script>
+function calculate() {
+  const display = document.getElementById("calcDisplay");
+  const result = document.getElementById("calcResult");
+
+  const expression = display.value.trim();
+
+  // Only allow basic arithmetic characters.
+  if (!/^[0-9+\-*/().\s]+$/.test(expression)) {
+    result.textContent = "Please enter a valid calculation.";
+    return;
+  }
+
+  try {
+    const answer = Function(
+      '"use strict"; return (' + expression + ')'
+    )();
+
+    result.textContent =
+      Number.isFinite(answer)
+        ? "Answer: " + answer
+        : "Invalid calculation.";
+  } catch {
+    result.textContent = "Invalid calculation.";
+  }
+}
+
+function clearCalc() {
+  document.getElementById("calcDisplay").value = "";
+  document.getElementById("calcResult").textContent =
+    "Your answer appears here.";
+}
+</script>
+
+</body>
+</html>
